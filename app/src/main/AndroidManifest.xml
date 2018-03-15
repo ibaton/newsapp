@@ -14,7 +14,7 @@
         <activity
             android:name="news.treehou.se.news.gui.activity.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +24,7 @@
         <activity
             android:name="news.treehou.se.news.gui.activity.NewsSourcesActivity"
             android:label="@string/sources"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

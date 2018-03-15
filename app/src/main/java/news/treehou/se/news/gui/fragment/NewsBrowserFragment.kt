@@ -12,6 +12,7 @@ import news.treehou.se.news.datasource.NewsApiSource
 import news.treehou.se.news.gui.adapter.NewsArticlesAdapter
 import news.treehou.se.news.model.NewsArticle
 import android.support.customtabs.CustomTabsIntent
+import android.support.v4.content.res.ResourcesCompat
 import androidx.net.toUri
 
 
@@ -49,8 +50,10 @@ class NewsBrowserFragment : BaseFragment(R.layout.fragment_news_browser) {
     }
 
     private fun openArticlePage(article: NewsArticle){
-        val builder = CustomTabsIntent.Builder()
-        val customTabsIntent = builder.build()
+        val customTabsIntent = CustomTabsIntent.Builder()
+                .setToolbarColor(ResourcesCompat.getColor(resources, R.color.colorPrimary, context?.theme))
+                .setSecondaryToolbarColor(ResourcesCompat.getColor(resources, R.color.colorAccent, context?.theme))
+                .build()
         customTabsIntent.launchUrl(context, article.url.toUri())
     }
 }
