@@ -9,8 +9,12 @@ import android.arch.persistence.room.PrimaryKey
  * A source of news articles.
  */
 @Entity(tableName = "source")
-data class NewsSource(
-        @PrimaryKey val id: String,
-        @ColumnInfo(name = "name") val name: String,
-        @Transient @ColumnInfo(name = "watched") var watched: Boolean = false
+data class NewsArticle(
+        val title: String,
+        val description: String,
+        val author: String?,
+        val url: String,
+        val urlToImage: String?,
+        val publishedAt: String?,
+        val source: NewsSource
 )

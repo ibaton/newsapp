@@ -58,9 +58,6 @@ class NewsSourceAdapter:RecyclerView.Adapter<NewsSourceAdapter.ViewHolder>() {
             watchCheckBox.setOnCheckedChangeListener(checkChangeListener)
         }
 
-        init {
-        }
-
         private val checkChangeListener = { _: View , isChecked: Boolean ->
             checkChangedSubject.onNext(Pair(items[layoutPosition], isChecked))
         }

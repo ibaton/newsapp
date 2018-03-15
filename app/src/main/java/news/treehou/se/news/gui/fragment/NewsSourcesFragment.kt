@@ -31,9 +31,9 @@ class NewsSourcesFragment : BaseFragment(R.layout.fragment_news_sources) {
         val context = context
 
         if(context != null){
-            val apiSource = NewsApiSource.getInstance(context.applicationContext)
+            val newsApi = NewsApiSource.getInstance(context.applicationContext)
 
-            apiSource.getSources()
+            newsApi.getSources()
                     .compose(bindToLifecycle())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -47,7 +47,7 @@ class NewsSourcesFragment : BaseFragment(R.layout.fragment_news_sources) {
                     .observeOn(Schedulers.io())
                     .subscribe({ (source, checked) ->
                         source.watched = checked
-                        apiSource.updateSources(source)
+                        newsApi.updateSources(source)
                     })
         }
     }

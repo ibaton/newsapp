@@ -15,4 +15,10 @@ val NewsApiKey = "cfd001f7ed5c40daa86862b4c1aa2ae1"
 interface NewsApiService {
     @GET("sources")
     fun listSources(@Query("apiKey") apiKey: String = NewsApiKey): Observable<Message.SourceMessage>
+
+    @GET("everything")
+    fun everything(@Query("sources") sources: String? = null, @Query("apiKey") apiKey: String = NewsApiKey): Observable<Message.ArticleMessage>
+
+    @GET("top-headlines")
+    fun topHeadlines(@Query("sources") sources: String? = null, @Query("apiKey") apiKey: String = NewsApiKey): Observable<Message.ArticleMessage>
 }
