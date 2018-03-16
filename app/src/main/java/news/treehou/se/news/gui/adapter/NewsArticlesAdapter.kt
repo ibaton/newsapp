@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.item_news_article.view.*
 import news.treehou.se.news.R
 import news.treehou.se.news.model.NewsArticle
 import news.treehou.se.news.model.NewsSource
+import java.text.DateFormat
 
 /**
  * Adapter that is used to show news articles.
@@ -71,7 +72,7 @@ class NewsArticlesAdapter:RecyclerView.Adapter<NewsArticlesAdapter.ViewHolder>()
 
             titleView.text = article.title
             descriptionView.text = article.description
-            dateView.text = article.publishedAt
+            setDateText(article.publishedAt)
             setAuthorText(article)
 
             loadImage(article)
@@ -98,6 +99,10 @@ class NewsArticlesAdapter:RecyclerView.Adapter<NewsArticlesAdapter.ViewHolder>()
             } else {
                 authorView.text = Html.fromHtml(authorString)
             }
+        }
+
+        private fun setDateText(date: String?){
+            dateView.text = date
         }
 
         fun updateVisibility(article: NewsArticle){

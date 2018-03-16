@@ -1,9 +1,13 @@
 package news.treehou.se.news.gui.fragment
 
 import android.os.Bundle
+import android.support.customtabs.CustomTabsIntent
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import androidx.net.toUri
+import dagger.android.support.AndroidSupportInjection
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_news_browser.*
@@ -11,14 +15,18 @@ import news.treehou.se.news.R
 import news.treehou.se.news.datasource.NewsApiSource
 import news.treehou.se.news.gui.adapter.NewsArticlesAdapter
 import news.treehou.se.news.model.NewsArticle
-import android.support.customtabs.CustomTabsIntent
-import android.support.v4.content.res.ResourcesCompat
-import androidx.net.toUri
+import javax.inject.Inject
 
 
 class NewsBrowserFragment : BaseFragment(R.layout.fragment_news_browser) {
 
+    @Inject lateinit var newsApi: NewsApiSource
+
     private val adapter = NewsArticlesAdapter()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,8 +41,6 @@ class NewsBrowserFragment : BaseFragment(R.layout.fragment_news_browser) {
         val context = context
 
         if (context != null) {
-            val newsApi = NewsApiSource.getInstance(context.applicationContext)
-
             newsApi.getTopHeadlines()
                     .compose(bindToLifecycle())
                     .subscribeOn(Schedulers.io())
