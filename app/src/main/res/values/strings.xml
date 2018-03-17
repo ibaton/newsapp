@@ -11,4 +11,5 @@
     <string name="source_author_text"><![CDATA[In <b>%1$s</b> by <b>%2$s</b>]]></string>
     <string name="source_text"><![CDATA[In <b>%1$s</b>]]></string>
     <string name="license">License</string>
+    <string name="no_articles_found">No articles found, swipe down to refresh.</string>
 </resources>

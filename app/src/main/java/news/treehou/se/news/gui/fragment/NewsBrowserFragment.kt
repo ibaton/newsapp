@@ -41,6 +41,13 @@ class NewsBrowserFragment : BaseFragment(R.layout.fragment_news_browser) {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
+                        if(it.isEmpty()){
+                            errorText.visibility = View.VISIBLE
+                            newsBrowserView.visibility = View.GONE
+                        } else {
+                            errorText.visibility = View.GONE
+                            newsBrowserView.visibility = View.VISIBLE
+                        }
                         adapter.addArticles(it)
                     })
 
