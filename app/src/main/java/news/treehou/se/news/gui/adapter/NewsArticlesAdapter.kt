@@ -6,23 +6,21 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.item_news_article.view.*
 import news.treehou.se.news.R
 import news.treehou.se.news.model.NewsArticle
-import news.treehou.se.news.model.NewsSource
+import news.treehou.se.news.newsapi.DateUtil
 import java.text.DateFormat
 
 /**
  * Adapter that is used to show news articles.
  */
-class NewsArticlesAdapter:RecyclerView.Adapter<NewsArticlesAdapter.ViewHolder>() {
+class NewsArticlesAdapter : RecyclerView.Adapter<NewsArticlesAdapter.ViewHolder>() {
 
     private val items: MutableList<NewsArticle> = mutableListOf()
     private val articleSelectedSubject = PublishSubject.create<NewsArticle>()
@@ -41,7 +39,7 @@ class NewsArticlesAdapter:RecyclerView.Adapter<NewsArticlesAdapter.ViewHolder>()
         holder.bind(items[position])
     }
 
-    fun addArticles(articles: List<NewsArticle>){
+    fun addArticles(articles: List<NewsArticle>) {
         items.clear()
         items.addAll(articles)
         notifyDataSetChanged()
@@ -50,7 +48,7 @@ class NewsArticlesAdapter:RecyclerView.Adapter<NewsArticlesAdapter.ViewHolder>()
     /**
      * Get observable that sends events when an items check state is changed.
      */
-    fun getArticleSelectedFlowable(): Flowable<NewsArticle>{
+    fun getArticleSelectedFlowable(): Flowable<NewsArticle> {
         return articleSelectedSubject.toFlowable(BackpressureStrategy.BUFFER)
     }
 
@@ -67,7 +65,7 @@ class NewsArticlesAdapter:RecyclerView.Adapter<NewsArticlesAdapter.ViewHolder>()
             }
         }
 
-        fun bind(article: NewsArticle){
+        fun bind(article: NewsArticle) {
             updateVisibility(article)
 
             titleView.text = article.title
@@ -78,17 +76,17 @@ class NewsArticlesAdapter:RecyclerView.Adapter<NewsArticlesAdapter.ViewHolder>()
             loadImage(article)
         }
 
-        private fun loadImage(article: NewsArticle){
-            if(article.urlToImage != null) {
+        private fun loadImage(article: NewsArticle) {
+            if (article.urlToImage != null) {
                 Picasso.get().load(article.urlToImage)
-                            .into(imageView)
+                        .into(imageView)
             } else {
                 Picasso.get().cancelRequest(imageView)
             }
         }
 
-        private fun setAuthorText(article: NewsArticle){
-            val authorString = if(article.author != null) {
+        private fun setAuthorText(article: NewsArticle) {
+            val authorString = if (article.author != null) {
                 itemView.context.getString(R.string.source_author_text, article.source.name, article.author)
             } else {
                 itemView.context.getString(R.string.source_text, article.source.name)
@@ -101,13 +99,18 @@ class NewsArticlesAdapter:RecyclerView.Adapter<NewsArticlesAdapter.ViewHolder>()
             }
         }
 
-        private fun setDateText(date: String?){
-            dateView.text = date
+        private fun setDateText(dateString: String?) {
+            dateView.text = try {
+                val date = DateUtil.dateFormat.parse(dateString)
+                DateFormat.getDateTimeInstance().format(date)
+            } catch (_: Throwable) {
+                dateString
+            }
         }
 
-        fun updateVisibility(article: NewsArticle){
-            dateView.visibility = if(article.publishedAt != null) View.VISIBLE else View.GONE
-            imageView.visibility = if(article.urlToImage != null) View.VISIBLE else View.GONE
+        fun updateVisibility(article: NewsArticle) {
+            dateView.visibility = if (article.publishedAt != null) View.VISIBLE else View.GONE
+            imageView.visibility = if (article.urlToImage != null) View.VISIBLE else View.GONE
         }
     }
 }
