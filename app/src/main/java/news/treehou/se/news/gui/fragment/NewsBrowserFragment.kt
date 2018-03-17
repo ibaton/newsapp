@@ -7,6 +7,9 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import androidx.net.toUri
+import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_news_browser.*
@@ -36,18 +39,14 @@ class NewsBrowserFragment : BaseFragment(R.layout.fragment_news_browser) {
         val context = context
 
         if (context != null) {
-            newsApi.getTopHeadlines()
+            createRefreshObservable()
+                    .switchMap { newsApi.getTopHeadlines() }
                     .compose(bindToLifecycle())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        if(it.isEmpty()){
-                            errorText.visibility = View.VISIBLE
-                            newsBrowserView.visibility = View.GONE
-                        } else {
-                            errorText.visibility = View.GONE
-                            newsBrowserView.visibility = View.VISIBLE
-                        }
+                        swipeRefresh.isRefreshing = false
+                        errorText.visibility = if(it.isEmpty()) View.VISIBLE  else View.GONE
                         adapter.addArticles(it)
                     })
 
@@ -66,5 +65,11 @@ class NewsBrowserFragment : BaseFragment(R.layout.fragment_news_browser) {
                 .setSecondaryToolbarColor(ResourcesCompat.getColor(resources, R.color.colorAccent, context?.theme))
                 .build()
         customTabsIntent.launchUrl(context, article.url.toUri())
+    }
+
+    private fun createRefreshObservable() : Flowable<Any> {
+        return RxSwipeRefreshLayout.refreshes(swipeRefresh).toFlowable(BackpressureStrategy.BUFFER).startWith(true)
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
     }
 }

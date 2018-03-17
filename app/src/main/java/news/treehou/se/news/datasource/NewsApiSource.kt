@@ -31,12 +31,13 @@ class NewsApiSource @Inject constructor() {
         return getSources().filterWatchedSources()
                 .filter { it.isNotEmpty() }
                 .switchMap { getNewsForSource(*it.toTypedArray()) }
+                .onErrorReturn { listOf() }
     }
 
     fun getTopHeadlines(): Flowable<List<NewsArticle>> {
         return getSources().filterWatchedSources()
-                .filter { it.isNotEmpty() }
                 .switchMap { getTopHeadlinesForSource(*it.toTypedArray()) }
+                .onErrorReturn { listOf() }
     }
 
     private fun queryFormatSources(vararg source: NewsSource): String {
@@ -67,5 +68,6 @@ class NewsApiSource @Inject constructor() {
                     it
                 }
                 .toFlowable(BackpressureStrategy.BUFFER)
+                .onErrorReturn { listOf() }
     }
 }

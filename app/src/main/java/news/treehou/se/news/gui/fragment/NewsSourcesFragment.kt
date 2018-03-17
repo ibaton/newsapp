@@ -1,9 +1,14 @@
 package news.treehou.se.news.gui.fragment
 
 import android.os.Bundle
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
+import io.reactivex.FlowableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_news_sources.*
@@ -34,12 +39,14 @@ class NewsSourcesFragment : BaseFragment(R.layout.fragment_news_sources) {
         val context = context
 
         if (context != null) {
-            newsApi.getSources()
+            createRefreshObservable()
+                    .switchMap({newsApi.getSources()})
                     .compose(bindToLifecycle())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
                     .map { sources -> sources.sortedWith(compareBy({ !it.watched }, { it.name })) }
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
+                        swipeRefresh.isRefreshing = false
+                        errorText.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
                         adapter.addSources(it)
                     })
 
@@ -51,5 +58,11 @@ class NewsSourcesFragment : BaseFragment(R.layout.fragment_news_sources) {
                         newsApi.updateSources(source)
                     })
         }
+    }
+
+    private fun createRefreshObservable() : Flowable<Any> {
+        return RxSwipeRefreshLayout.refreshes(swipeRefresh).toFlowable(BackpressureStrategy.BUFFER).startWith(true)
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
     }
 }

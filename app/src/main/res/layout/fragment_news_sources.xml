@@ -7,8 +7,22 @@
     tools:context=".gui.fragment.NewsSourcesFragment"
     tools:showIn="@layout/activity_news_sources">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/sourceListView"
+    <TextView
+        android:id="@+id/errorText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="10dp"
+        android:text="@string/no_sources_found"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeRefresh"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -20,5 +34,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/sourceListView"
+             android:layout_height="match_parent"
+            android:layout_width="match_parent"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 </android.support.constraint.ConstraintLayout>

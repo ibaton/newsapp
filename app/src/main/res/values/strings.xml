@@ -12,4 +12,5 @@
     <string name="source_text"><![CDATA[In <b>%1$s</b>]]></string>
     <string name="license">License</string>
     <string name="no_articles_found">No articles found, swipe down to refresh.</string>
+    <string name="no_sources_found">No sources found, swipe down to refresh.</string>
 </resources>
