@@ -1,14 +1,13 @@
 package news.treehou.se.news.gui.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
+import dagger.android.support.HasSupportFragmentInjector
+import kotlinx.android.synthetic.main.activity_news_sources.*
 import news.treehou.se.news.R
 
-import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_news_sources.*
 
-
-class NewsSourcesActivity : AppCompatActivity() {
+class NewsSourcesActivity : BaseActivity(), HasSupportFragmentInjector {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,7 +15,7 @@ class NewsSourcesActivity : AppCompatActivity() {
         setupActionbar()
     }
 
-    private fun setupActionbar(){
+    private fun setupActionbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

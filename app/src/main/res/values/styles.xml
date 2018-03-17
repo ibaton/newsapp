@@ -10,4 +10,10 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AppText.Article.Title" parent="TextAppearance.AppCompat.Large" />
+
+    <style name="AppText.Article.Body" parent="TextAppearance.AppCompat.Medium" />
+
+    <style name="AppText.Article.Detail" parent="TextAppearance.AppCompat.Small" />
+
 </resources>

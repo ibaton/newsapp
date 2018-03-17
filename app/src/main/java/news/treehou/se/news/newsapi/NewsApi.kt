@@ -10,12 +10,14 @@ import retrofit2.converter.moshi.MoshiConverterFactory
  */
 class NewsApi {
     companion object {
-        private var retrofit = Retrofit.Builder()
-                .baseUrl("https://newsapi.org/v2/")
-                .addConverterFactory(MoshiConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
+        fun createNewsApiService(): NewsApiService{
+            val retrofit = Retrofit.Builder()
+                    .baseUrl("https://newsapi.org/v2/")
+                    .addConverterFactory(MoshiConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build()
 
-        var service: NewsApiService = retrofit.create(NewsApiService::class.java)
+            return retrofit.create(NewsApiService::class.java)
+        }
     }
 }
