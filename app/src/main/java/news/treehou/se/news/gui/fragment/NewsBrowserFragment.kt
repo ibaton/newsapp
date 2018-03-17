@@ -1,6 +1,5 @@
 package news.treehou.se.news.gui.fragment
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.customtabs.CustomTabsIntent
 import android.support.v4.content.res.ResourcesCompat
@@ -23,10 +22,6 @@ class NewsBrowserFragment : BaseFragment(R.layout.fragment_news_browser) {
     @Inject lateinit var newsApi: NewsApiSource
 
     private val adapter = NewsArticlesAdapter()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
