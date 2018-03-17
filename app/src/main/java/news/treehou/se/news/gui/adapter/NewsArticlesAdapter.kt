@@ -3,11 +3,13 @@ package news.treehou.se.news.gui.adapter
 import android.os.Build
 import android.support.v7.widget.RecyclerView
 import android.text.Html
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -15,6 +17,7 @@ import io.reactivex.subjects.PublishSubject
 import news.treehou.se.news.R
 import news.treehou.se.news.model.NewsArticle
 import news.treehou.se.news.newsapi.DateUtil
+import java.lang.Exception
 import java.text.DateFormat
 
 /**
@@ -80,9 +83,8 @@ class NewsArticlesAdapter : RecyclerView.Adapter<NewsArticlesAdapter.ViewHolder>
          * Load image of news article.
          */
         private fun loadImage(article: NewsArticle) {
-            if (article.urlToImage != null) {
-                Picasso.get().load(article.urlToImage)
-                        .into(imageView)
+            if (TextUtils.isEmpty(article.urlToImage)) {
+                Picasso.get().load(article.urlToImage).into(imageView)
             } else {
                 Picasso.get().cancelRequest(imageView)
             }
