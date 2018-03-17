@@ -1,5 +1,6 @@
 package news.treehou.se.news.gui.fragment
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.customtabs.CustomTabsIntent
 import android.support.v4.content.res.ResourcesCompat
@@ -54,9 +55,12 @@ class NewsBrowserFragment : BaseFragment(R.layout.fragment_news_browser) {
         }
     }
 
+    /**
+     * Open article in external browser tab customized with our theme.
+     */
     private fun openArticlePage(article: NewsArticle) {
         val customTabsIntent = CustomTabsIntent.Builder()
-                .setToolbarColor(ResourcesCompat.getColor(resources, R.color.colorPrimary, context?.theme))
+                .setToolbarColor(ResourcesCompat.getColor(resources, R.color.actionbarBackground, context?.theme))
                 .setSecondaryToolbarColor(ResourcesCompat.getColor(resources, R.color.colorAccent, context?.theme))
                 .build()
         customTabsIntent.launchUrl(context, article.url.toUri())

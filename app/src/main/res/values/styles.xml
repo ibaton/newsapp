@@ -8,7 +8,6 @@
         <item name="actionBarStyle">@style/AppActionbar</item>
         <item name="android:actionBarStyle">@style/AppActionbar</item>
         <item name="actionBarTheme">@style/AppTheme.Actionbar</item>
-        <item name="android:statusBarColor">@color/actionbarBackground</item>
     </style>
 
     <style name="AppTheme.Actionbar" parent="ThemeOverlay.AppCompat.Light">

@@ -3,6 +3,7 @@ package news.treehou.se.news.gui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
@@ -13,8 +14,7 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import news.treehou.se.news.R
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.LibsBuilder
-
-
+import com.mikepenz.aboutlibraries.util.Colors
 
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, HasSupportFragmentInjector {
@@ -76,8 +76,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
      * Start the flow that opens license page.
      */
     private fun openLicensePageFlow(){
-        LibsBuilder()
-                .withActivityStyle(Libs.ActivityStyle.LIGHT)
-                .start(this)
+        val toolbarColor = ResourcesCompat.getColor(resources, R.color.actionbarBackground, theme)
+        LibsBuilder().withActivityStyle(Libs.ActivityStyle.LIGHT)
+            .withActivityColor(Colors(toolbarColor, toolbarColor))
+            .withActivityTitle(getString(R.string.license))
+            .start(this)
     }
 }
