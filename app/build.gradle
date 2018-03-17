@@ -42,6 +42,7 @@ dependencies {
     implementation "com.android.support:customtabs:$supportLibraryVersion"
     implementation "com.android.support:design:$supportLibraryVersion"
     implementation "com.android.support:recyclerview-v7:$supportLibraryVersion"
+    implementation "com.android.support:support-annotations:$supportLibraryVersion"
     implementation 'androidx.core:core-ktx:0.2'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-moshi:2.4.0'
@@ -62,6 +63,10 @@ dependencies {
     implementation "com.google.dagger:dagger-android:$daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+
+    implementation('com.mikepenz:aboutlibraries:6.0.6@aar') {
+        transitive = true
+    }
 
     kapt "android.arch.persistence.room:compiler:$archRoomVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'

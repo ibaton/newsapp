@@ -11,6 +11,10 @@ import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import news.treehou.se.news.R
+import com.mikepenz.aboutlibraries.Libs
+import com.mikepenz.aboutlibraries.LibsBuilder
+
+
 
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, HasSupportFragmentInjector {
@@ -52,6 +56,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             R.id.nav_news_source -> {
                 openNewsSourcePageFlow()
             }
+            R.id.nav_licenses -> {
+                openLicensePageFlow()
+            }
         }
 
         drawerLayout.closeDrawer(GravityCompat.START)
@@ -61,7 +68,16 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     /**
      * Start the flow that opens news source page.
      */
-    fun openNewsSourcePageFlow(){
+    private fun openNewsSourcePageFlow(){
         startActivity(Intent(this, NewsSourcesActivity::class.java))
+    }
+
+    /**
+     * Start the flow that opens license page.
+     */
+    private fun openLicensePageFlow(){
+        LibsBuilder()
+                .withActivityStyle(Libs.ActivityStyle.LIGHT)
+                .start(this)
     }
 }

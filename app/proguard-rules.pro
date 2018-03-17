@@ -30,3 +30,9 @@
 
 # Okhttp
 -dontwarn okio.**
+
+# About library
+-keep class .R
+-keep class **.R$* {
+    <fields>;
+}
