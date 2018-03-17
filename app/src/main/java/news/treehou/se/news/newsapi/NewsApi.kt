@@ -12,7 +12,7 @@ class NewsApi {
     companion object {
         fun createNewsApiService(): NewsApiService{
             val retrofit = Retrofit.Builder()
-                    .baseUrl("https://newsapi.org/v2/")
+                    .baseUrl("http://newsapi.org/v2/")
                     .addConverterFactory(MoshiConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build()
