@@ -1,6 +1,6 @@
 package news.treehou.se.news.datasource
 
-import android.content.Context
+import android.support.v4.app.Fragment
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.functions.BiFunction
@@ -8,12 +8,12 @@ import io.reactivex.schedulers.Schedulers
 import news.treehou.se.news.database.NewsDatabase
 import news.treehou.se.news.model.NewsArticle
 import news.treehou.se.news.model.NewsSource
-import news.treehou.se.news.newsapi.NewsApi
+import news.treehou.se.news.newsapi.NewsApiService
+import javax.inject.Inject
 
-class NewsApiSource(val context: Context) {
-
-    val database: NewsDatabase = NewsDatabase.getInstance(context)
-    val newsApi = NewsApi.service
+class NewsApiSource @Inject constructor() {
+    @Inject lateinit var database: NewsDatabase
+    @Inject lateinit var newsApi: NewsApiService
 
     fun getSources(): Flowable<List<NewsSource>> {
         return Flowable.combineLatest(
@@ -45,13 +45,13 @@ class NewsApiSource(val context: Context) {
 
     private fun getNewsForSource(vararg source: NewsSource): Flowable<List<NewsArticle>> {
         val queryFormattedSource = queryFormatSources(*source)
-        return newsApi.everything(sources=queryFormattedSource).map { it.articles }
+        return newsApi.everything(sources = queryFormattedSource).map { it.articles }
                 .toFlowable(BackpressureStrategy.BUFFER)
     }
 
     private fun getTopHeadlinesForSource(vararg source: NewsSource): Flowable<List<NewsArticle>> {
         val queryFormattedSource = queryFormatSources(*source)
-        return newsApi.topHeadlines(sources=queryFormattedSource).map { it.articles }
+        return newsApi.topHeadlines(sources = queryFormattedSource).map { it.articles }
                 .toFlowable(BackpressureStrategy.BUFFER)
     }
 
@@ -67,17 +67,5 @@ class NewsApiSource(val context: Context) {
                     it
                 }
                 .toFlowable(BackpressureStrategy.BUFFER)
-    }
-
-    companion object {
-
-        @Volatile
-        private var INSTANCE: NewsApiSource? = null
-
-        fun getInstance(context: Context): NewsApiSource =
-                INSTANCE ?: synchronized(this) {
-                    INSTANCE ?: NewsApiSource(context.applicationContext).also { INSTANCE = it }
-                }
-
     }
 }

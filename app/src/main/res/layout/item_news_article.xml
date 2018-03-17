@@ -21,6 +21,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:textAppearance="@style/AppText.Article.Detail"
             tools:text="Author" />
 
         <TextView
@@ -33,6 +34,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/author"
+            android:textAppearance="@style/AppText.Article.Detail"
             tools:text="Date" />
 
         <ImageView
@@ -58,6 +60,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image"
+            android:textAppearance="@style/AppText.Article.Title"
             tools:text="Article Title" />
 
         <TextView
@@ -73,6 +76,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title"
             app:layout_constraintVertical_bias="0.0"
+            android:textAppearance="@style/AppText.Article.Body"
             tools:text="Article Description" />
 
     </android.support.constraint.ConstraintLayout>

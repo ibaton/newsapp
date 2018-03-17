@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -32,6 +31,7 @@ ext {
     supportLibraryVersion = '27.1.0'
     rxlifecycleVersion = '2.2.1'
     archRoomVersion = '1.0.0'
+    daggerVersion = '2.15'
 }
 
 dependencies {
@@ -56,6 +56,13 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:$archRoomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$archRoomVersion"
     implementation "android.arch.persistence.room:rxjava2:$archRoomVersion"
+
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    implementation "com.google.dagger:dagger-android:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+
     kapt "android.arch.persistence.room:compiler:$archRoomVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
