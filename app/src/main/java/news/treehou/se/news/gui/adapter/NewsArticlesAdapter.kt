@@ -76,6 +76,9 @@ class NewsArticlesAdapter : RecyclerView.Adapter<NewsArticlesAdapter.ViewHolder>
             loadImage(article)
         }
 
+        /**
+         * Load image of news article.
+         */
         private fun loadImage(article: NewsArticle) {
             if (article.urlToImage != null) {
                 Picasso.get().load(article.urlToImage)
@@ -85,6 +88,9 @@ class NewsArticlesAdapter : RecyclerView.Adapter<NewsArticlesAdapter.ViewHolder>
             }
         }
 
+        /**
+         * Update the author text.
+         */
         private fun setAuthorText(article: NewsArticle) {
             val authorString = if (article.author != null) {
                 itemView.context.getString(R.string.source_author_text, article.source.name, article.author)
@@ -99,6 +105,9 @@ class NewsArticlesAdapter : RecyclerView.Adapter<NewsArticlesAdapter.ViewHolder>
             }
         }
 
+        /**
+         * Format and set the publishing date.
+         */
         private fun setDateText(dateString: String?) {
             dateView.text = try {
                 val date = DateUtil.dateFormat.parse(dateString)
@@ -108,7 +117,10 @@ class NewsArticlesAdapter : RecyclerView.Adapter<NewsArticlesAdapter.ViewHolder>
             }
         }
 
-        fun updateVisibility(article: NewsArticle) {
+        /**
+         * Update visibility of text views.
+         */
+        private fun updateVisibility(article: NewsArticle) {
             dateView.visibility = if (article.publishedAt != null) View.VISIBLE else View.GONE
             imageView.visibility = if (article.urlToImage != null) View.VISIBLE else View.GONE
         }
