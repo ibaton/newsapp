@@ -52,7 +52,6 @@ class NewsSourceAdapter:RecyclerView.Adapter<NewsSourceAdapter.ViewHolder>() {
 
         fun bind(source: NewsSource){
             watchCheckBox.text = source.name
-
             watchCheckBox.setOnCheckedChangeListener(null)
             watchCheckBox.isChecked = source.watched
             watchCheckBox.setOnCheckedChangeListener(checkChangeListener)

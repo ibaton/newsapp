@@ -10,7 +10,7 @@ import news.treehou.se.news.dagger.DaggerAppComponent
 import javax.inject.Inject
 
 
-class NewsApplication : Application(), HasActivityInjector {
+class App : Application(), HasActivityInjector {
 
     @Inject lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
 

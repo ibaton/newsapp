@@ -7,7 +7,6 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import androidx.net.toUri
-import dagger.android.support.AndroidSupportInjection
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_news_browser.*
@@ -55,7 +54,7 @@ class NewsBrowserFragment : BaseFragment(R.layout.fragment_news_browser) {
         }
     }
 
-    private fun openArticlePage(article: NewsArticle){
+    private fun openArticlePage(article: NewsArticle) {
         val customTabsIntent = CustomTabsIntent.Builder()
                 .setToolbarColor(ResourcesCompat.getColor(resources, R.color.colorPrimary, context?.theme))
                 .setSecondaryToolbarColor(ResourcesCompat.getColor(resources, R.color.colorAccent, context?.theme))
