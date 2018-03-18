@@ -127,15 +127,15 @@ class NewsArticlesAdapter : RecyclerView.Adapter<NewsArticlesAdapter.ViewHolder>
             dateView.visibility = if (article.publishedAt != null) View.VISIBLE else View.GONE
             imageView.visibility = if (article.urlToImage != null) View.VISIBLE else View.GONE
         }
-
-
     }
 
     /**
      * Picasso callback that hides image on error.
      */
     class ImageLoaderHideOnError(val view: View): Callback {
-        override fun onSuccess() {}
+        override fun onSuccess() {
+            view.visibility = View.VISIBLE
+        }
 
         override fun onError(e: Exception?) {
             view.visibility = View.GONE
