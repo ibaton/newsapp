@@ -42,7 +42,7 @@ class NewsSourcesFragment : BaseFragment(R.layout.fragment_news_sources) {
                     .switchMap({ newsApi.getSources() })
                     .compose(bindToLifecycle())
                     .map { sources -> sources.sortedWith(compareBy({ !it.watched }, { it.name })) }
-                    .map { it.map { NewsSourceAdapter.DataAdapterItem(it) } }
+                    .map { it.map { NewsSourceAdapter.SourceAdapterItem(it) } }
                     .addSourceWatchLabels(context)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
@@ -74,7 +74,7 @@ class NewsSourcesFragment : BaseFragment(R.layout.fragment_news_sources) {
      * Adds labels to source list to show that source is watched by user.
      * @param context
      */
-    private fun Flowable<List<NewsSourceAdapter.DataAdapterItem>>.addSourceWatchLabels(context: Context): Flowable<List<NewsSourceAdapter.NewsSourceAdapterItem>> {
+    private fun Flowable<List<NewsSourceAdapter.SourceAdapterItem>>.addSourceWatchLabels(context: Context): Flowable<List<NewsSourceAdapter.NewsSourceAdapterItem>> {
         return this.map {
             val watchedLabel: String = context.getString(R.string.watched_sources)
             val sourcesLabel: String = context.getString(R.string.other_sources)

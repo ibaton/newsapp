@@ -22,6 +22,7 @@ class NewsSourceAdapter : RecyclerView.Adapter<NewsSourceAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
+
         if (viewType == VIEW_TYPE_LABEL) {
             val view = inflater.inflate(R.layout.item_news_label, parent, false)
             return LabelViewHolder(view)
@@ -44,19 +45,26 @@ class NewsSourceAdapter : RecyclerView.Adapter<NewsSourceAdapter.ViewHolder>() {
         return VIEW_TYPE_SOURCE
     }
 
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
 
         if (holder is LabelViewHolder && item is LabelAdapterItem) {
             holder.bind(item.label)
-        } else if (holder is SourceViewHolder && item is DataAdapterItem) {
+        } else if (holder is SourceViewHolder && item is SourceAdapterItem) {
             holder.bind(item.source)
         }
     }
 
-    fun updateSources(sources: List<NewsSourceAdapterItem>) {
+    /**
+     * TODO add diff util sort data set and make animations nicer.
+     * Cleared old data and updates with provided items.
+     *
+     * @param newItems the items to populate adapter with
+     */
+    fun updateSources(newItems: List<NewsSourceAdapterItem>) {
         items.clear()
-        items.addAll(sources)
+        items.addAll(newItems)
         notifyDataSetChanged()
     }
 
@@ -81,7 +89,7 @@ class NewsSourceAdapter : RecyclerView.Adapter<NewsSourceAdapter.ViewHolder>() {
 
         private val checkChangeListener = { _: View, isChecked: Boolean ->
             val item = items[layoutPosition]
-            if (item is DataAdapterItem) {
+            if (item is SourceAdapterItem) {
                 checkChangedSubject.onNext(Pair(item.source, isChecked))
             }
         }
@@ -98,12 +106,20 @@ class NewsSourceAdapter : RecyclerView.Adapter<NewsSourceAdapter.ViewHolder>() {
 
     abstract class NewsSourceAdapterItem
 
+    /**
+     * A item that renders as a label by the adapter
+     * @param the label to show
+     */
     class LabelAdapterItem(val label: String) : NewsSourceAdapterItem()
 
-    class DataAdapterItem(val source: NewsSource) : NewsSourceAdapterItem()
+    /**
+     * A item that renders a news source by the adapter
+     * @param the label to show
+     */
+    class SourceAdapterItem(val source: NewsSource) : NewsSourceAdapterItem()
 
     companion object {
-        private val VIEW_TYPE_LABEL = 1
-        private val VIEW_TYPE_SOURCE = 2
+        private const val VIEW_TYPE_LABEL = 1
+        private const val VIEW_TYPE_SOURCE = 2
     }
 }
