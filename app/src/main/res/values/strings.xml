@@ -16,5 +16,5 @@
     <string name="search">Search</string>
     <string name="watched_sources">Watched Sources</string>
     <string name="other_sources">Sources</string>
-    <string name="no_source_setup">No news sources is enabled. \nClick %s to go source page.</string>
+    <string name="no_source_setup">No news sources is added. \nClick %s to go source page.</string>
 </resources>
