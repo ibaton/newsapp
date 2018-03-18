@@ -27,6 +27,10 @@
 
     <style name="AppText.Article.Detail" parent="TextAppearance.AppCompat.Small" />
 
+    <style name="AppText.Source" parent="TextAppearance.AppCompat.Medium" />
+
+    <style name="AppText.Source.Label"/>
+
     <style name="AppActionbar">
         <item name="android:background">@color/actionbarBackground</item>
         <item name="background">@color/actionbarBackground</item>

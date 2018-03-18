@@ -13,4 +13,7 @@
     <string name="license">License</string>
     <string name="no_articles_found">No articles found, swipe down to refresh.</string>
     <string name="no_sources_found">No sources found, swipe down to refresh.</string>
+    <string name="search">Search</string>
+    <string name="watched_sources">Watched Sources</string>
+    <string name="other_sources">Sources</string>
 </resources>

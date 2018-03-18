@@ -39,7 +39,7 @@ class NewsBrowserFragment : BaseFragment(R.layout.fragment_news_browser) {
         val context = context
 
         if (context != null) {
-            createRefreshObservable()
+            createRefreshFlowable()
                     .switchMap { newsApi.getTopHeadlines() }
                     .compose(bindToLifecycle())
                     .subscribeOn(Schedulers.io())
@@ -67,7 +67,10 @@ class NewsBrowserFragment : BaseFragment(R.layout.fragment_news_browser) {
         customTabsIntent.launchUrl(context, article.url.toUri())
     }
 
-    private fun createRefreshObservable() : Flowable<Any> {
+    /**
+     * Flowable that emits item when swipe to refresh is triggered by user.
+     */
+    private fun createRefreshFlowable() : Flowable<Any> {
         return RxSwipeRefreshLayout.refreshes(swipeRefresh).toFlowable(BackpressureStrategy.BUFFER).startWith(true)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.io())
