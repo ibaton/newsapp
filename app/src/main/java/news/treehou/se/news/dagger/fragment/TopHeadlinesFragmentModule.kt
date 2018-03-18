@@ -3,13 +3,12 @@ package news.treehou.se.news.dagger.fragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import news.treehou.se.news.dagger.scope.FragmentScope
-import news.treehou.se.news.gui.fragment.NewsBrowserFragment
 import news.treehou.se.news.gui.fragment.TopHeadlinesBrowserFragment
 
 @Module
-internal abstract class NewsBrowserFragmentModule {
+internal abstract class TopHeadlinesFragmentModule {
 
     @FragmentScope
     @ContributesAndroidInjector
-    internal abstract fun contributeFragmentInjector(): NewsBrowserFragment
+    internal abstract fun contributeFragmentInjector(): TopHeadlinesBrowserFragment
 }

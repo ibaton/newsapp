@@ -30,10 +30,10 @@ class NewsApiSource @Inject constructor() {
         database.sourceDao().updateAll(*source)
     }
 
-    fun getArticles(): Flowable<List<NewsArticle>> {
+    fun getArticles(searchText: String): Flowable<List<NewsArticle>> {
         return getSources().filterWatchedSources()
                 .filter { it.isNotEmpty() }
-                .switchMap { getNewsForSource(*it.toTypedArray()) }
+                .switchMap { getNewsForSource(searchText, *it.toTypedArray()) }
                 .onErrorReturn { listOf() }
     }
 
@@ -47,9 +47,9 @@ class NewsApiSource @Inject constructor() {
         return listOf(*source).joinToString(separator = ",") { it.id }
     }
 
-    private fun getNewsForSource(vararg source: NewsSource): Flowable<List<NewsArticle>> {
+    private fun getNewsForSource(searchText: String, vararg source: NewsSource): Flowable<List<NewsArticle>> {
         val queryFormattedSource = queryFormatSources(*source)
-        return newsApi.everything(sources = queryFormattedSource).map { it.articles }
+        return newsApi.everything(searchText, sources = queryFormattedSource).map { it.articles }
                 .toFlowable(BackpressureStrategy.BUFFER)
     }
 

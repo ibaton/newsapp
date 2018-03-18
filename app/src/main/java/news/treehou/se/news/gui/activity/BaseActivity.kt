@@ -2,6 +2,7 @@ package news.treehou.se.news.gui.activity
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.view.MenuItem
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
@@ -24,5 +25,15 @@ abstract class BaseActivity : RxAppCompatActivity(), HasSupportFragmentInjector 
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> {
         return fragmentInjector
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 }

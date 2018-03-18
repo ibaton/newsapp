@@ -6,4 +6,5 @@
     <color name="actionbarBackground">#FFFFFF</color>
     <color name="statusBarBackground">#a4a4a4</color>
     <color name="windowBackground">#f1f1f1</color>
+    <color name="transparent">#00000000</color>
 </resources>

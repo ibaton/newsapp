@@ -13,7 +13,7 @@ interface NewsApiService {
     fun listSources(@Query("apiKey") apiKey: String = NEWS_API_KEY): Observable<Message.SourceMessage>
 
     @GET("everything")
-    fun everything(@Query("sources") sources: String? = null, @Query("apiKey") apiKey: String = NEWS_API_KEY): Observable<Message.ArticleMessage>
+    fun everything(@Query("q") query: String, @Query("sources") sources: String? = null, @Query("apiKey") apiKey: String = NEWS_API_KEY): Observable<Message.ArticleMessage>
 
     @GET("top-headlines")
     fun topHeadlines(@Query("sources") sources: String? = null, @Query("apiKey") apiKey: String = NEWS_API_KEY): Observable<Message.ArticleMessage>

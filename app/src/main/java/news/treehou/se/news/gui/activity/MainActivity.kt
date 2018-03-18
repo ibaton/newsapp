@@ -8,13 +8,13 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
+import com.mikepenz.aboutlibraries.Libs
+import com.mikepenz.aboutlibraries.LibsBuilder
+import com.mikepenz.aboutlibraries.util.Colors
 import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import news.treehou.se.news.R
-import com.mikepenz.aboutlibraries.Libs
-import com.mikepenz.aboutlibraries.LibsBuilder
-import com.mikepenz.aboutlibraries.util.Colors
 
 /**
  * Main activity for application.
@@ -61,21 +61,37 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.app_bar_search -> {
+                openBrowseNewsPageFlow()
+            }
+        }
+        return true
+    }
+
     /**
      * Start the flow that opens news source page.
      */
-    private fun openNewsSourcePageFlow(){
+    private fun openNewsSourcePageFlow() {
         startActivity(Intent(this, NewsSourcesActivity::class.java))
+    }
+
+    /**
+     * Start the flow that opens news browser page.
+     */
+    private fun openBrowseNewsPageFlow() {
+        startActivity(Intent(this, BrowseNewsActivity::class.java))
     }
 
     /**
      * Start the flow that opens license page.
      */
-    private fun openLicensePageFlow(){
+    private fun openLicensePageFlow() {
         val toolbarColor = ResourcesCompat.getColor(resources, R.color.actionbarBackground, theme)
         LibsBuilder().withActivityStyle(Libs.ActivityStyle.LIGHT)
-            .withActivityColor(Colors(toolbarColor, toolbarColor))
-            .withActivityTitle(getString(R.string.license))
-            .start(this)
+                .withActivityColor(Colors(toolbarColor, toolbarColor))
+                .withActivityTitle(getString(R.string.license))
+                .start(this)
     }
 }

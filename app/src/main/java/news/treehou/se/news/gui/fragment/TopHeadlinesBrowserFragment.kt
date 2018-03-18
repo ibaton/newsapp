@@ -8,9 +8,7 @@ import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.fragment_news_browser.*
 import news.treehou.se.news.R
 import news.treehou.se.news.datasource.NewsApiSource
@@ -19,11 +17,9 @@ import news.treehou.se.news.gui.adapter.NewsArticlesAdapter
 import javax.inject.Inject
 
 
-class NewsBrowserFragment : BaseFragment(R.layout.fragment_news_browser) {
+class TopHeadlinesBrowserFragment : BaseFragment(R.layout.fragment_top_headlines) {
 
     @Inject lateinit var newsApi: NewsApiSource
-
-    val searchSubject = BehaviorSubject.createDefault<String>("")
 
     private val adapter = NewsArticlesAdapter()
 
@@ -40,18 +36,8 @@ class NewsBrowserFragment : BaseFragment(R.layout.fragment_news_browser) {
         val context = context
 
         if (context != null) {
-            Flowable.combineLatest<Any, String, String>(
-                    createRefreshFlowable(),
-                    searchSubject.toFlowable(BackpressureStrategy.LATEST),
-                    BiFunction { _, searchText -> searchText }
-            )
-                    .switchMap {
-                        if (it.isBlank()) {
-                            Flowable.just(emptyList())
-                        } else {
-                            newsApi.getArticles(it)
-                        }
-                    }
+            createRefreshFlowable()
+                    .switchMap { newsApi.getTopHeadlines() }
                     .compose(bindToLifecycle())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -65,13 +51,6 @@ class NewsBrowserFragment : BaseFragment(R.layout.fragment_news_browser) {
                     .compose(bindToLifecycle())
                     .subscribe({ PageUtil.openArticlePage(context, it) })
         }
-    }
-
-    /**
-     * Update the word to search for
-     */
-    fun search(searchWord: String) {
-        searchSubject.onNext(searchWord)
     }
 
     /**
