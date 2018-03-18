@@ -6,21 +6,27 @@ import android.support.design.widget.NavigationView
 import android.support.v4.content.res.ResourcesCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.LibsBuilder
 import com.mikepenz.aboutlibraries.util.Colors
 import dagger.android.support.HasSupportFragmentInjector
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import news.treehou.se.news.R
+import news.treehou.se.news.datasource.NewsApiSource
+import javax.inject.Inject
 
 /**
  * Main activity for application.
  * Provides news flow and options to navigate to other parts of application
  */
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, HasSupportFragmentInjector {
+
+    @Inject lateinit var newsApiSource: NewsApiSource
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +38,18 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this)
+
+        newsApiSource.getWatchedSources().first(emptyList())
+                .filter({it.isEmpty()})
+                .compose(bindToLifecycle())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    AlertDialog.Builder(this)
+                            .setTitle(getString(R.string.sources))
+                            .setMessage(getString(R.string.no_source_setup, getString(android.R.string.ok)))
+                            .setPositiveButton(android.R.string.ok, { _, _ -> openNewsSourcePageFlow() })
+                            .show()
+                })
     }
 
     override fun onBackPressed() {

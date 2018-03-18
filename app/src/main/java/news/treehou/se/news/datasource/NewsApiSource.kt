@@ -18,12 +18,22 @@ class NewsApiSource @Inject constructor() {
     @Inject lateinit var database: NewsDatabase
     @Inject lateinit var newsApi: NewsApiService
 
+    /**
+     * Get news sources from news api.
+     */
     fun getSources(): Flowable<List<NewsSource>> {
         return Flowable.combineLatest(
                 database.sourceDao().all,
                 requestAndCacheSources(),
                 BiFunction { sources, _ -> sources }
         )
+    }
+
+    /**
+     * Get watched news sources from news api.
+     */
+    fun getWatchedSources(): Flowable<List<NewsSource>> {
+        return getSources().filterWatchedSources()
     }
 
     fun updateSources(vararg source: NewsSource) {
