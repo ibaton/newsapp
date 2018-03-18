@@ -16,7 +16,10 @@ import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.LibsBuilder
 import com.mikepenz.aboutlibraries.util.Colors
 
-
+/**
+ * Main activity for application.
+ * Provides news flow and options to navigate to other parts of application
+ */
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, HasSupportFragmentInjector {
 
     override fun onCreate(savedInstanceState: Bundle?) {

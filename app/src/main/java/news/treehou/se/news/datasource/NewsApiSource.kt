@@ -1,6 +1,5 @@
 package news.treehou.se.news.datasource
 
-import android.support.v4.app.Fragment
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.functions.BiFunction
@@ -11,6 +10,10 @@ import news.treehou.se.news.model.NewsSource
 import news.treehou.se.news.newsapi.NewsApiService
 import javax.inject.Inject
 
+/**
+ * Source of news articles.
+ * Handles network requests and caching of data.
+ */
 class NewsApiSource @Inject constructor() {
     @Inject lateinit var database: NewsDatabase
     @Inject lateinit var newsApi: NewsApiService
@@ -69,5 +72,12 @@ class NewsApiSource @Inject constructor() {
                 }
                 .toFlowable(BackpressureStrategy.BUFFER)
                 .onErrorReturn { listOf() }
+    }
+
+    /**
+     * Filter out sources that isn't watched.
+     */
+    fun Flowable<List<NewsSource>>.filterWatchedSources(): Flowable<List<NewsSource>> {
+        return this.map { it.filter { source -> source.watched } }
     }
 }
