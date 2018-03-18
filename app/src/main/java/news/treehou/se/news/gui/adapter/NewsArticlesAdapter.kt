@@ -83,8 +83,9 @@ class NewsArticlesAdapter : RecyclerView.Adapter<NewsArticlesAdapter.ViewHolder>
          * Load image of news article.
          */
         private fun loadImage(article: NewsArticle) {
-            if (TextUtils.isEmpty(article.urlToImage)) {
-                Picasso.get().load(article.urlToImage).into(imageView)
+            if (!TextUtils.isEmpty(article.urlToImage)) {
+                Picasso.get().load(article.urlToImage)
+                        .into(imageView, ImageLoaderHideOnError(imageView))
             } else {
                 Picasso.get().cancelRequest(imageView)
             }
@@ -125,6 +126,19 @@ class NewsArticlesAdapter : RecyclerView.Adapter<NewsArticlesAdapter.ViewHolder>
         private fun updateVisibility(article: NewsArticle) {
             dateView.visibility = if (article.publishedAt != null) View.VISIBLE else View.GONE
             imageView.visibility = if (article.urlToImage != null) View.VISIBLE else View.GONE
+        }
+
+
+    }
+
+    /**
+     * Picasso callback that hides image on error.
+     */
+    class ImageLoaderHideOnError(val view: View): Callback {
+        override fun onSuccess() {}
+
+        override fun onError(e: Exception?) {
+            view.visibility = View.GONE
         }
     }
 }
