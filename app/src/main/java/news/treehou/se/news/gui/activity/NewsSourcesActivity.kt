@@ -1,14 +1,13 @@
 package news.treehou.se.news.gui.activity
 
 import android.os.Bundle
-import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_news_sources.*
 import news.treehou.se.news.R
 
 /**
  * Activity that lets user select which news sources to follow
  */
-class NewsSourcesActivity : BaseActivity(), HasSupportFragmentInjector {
+class NewsSourcesActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

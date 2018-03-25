@@ -2,7 +2,6 @@ package news.treehou.se.news.gui.activity
 
 import android.os.Bundle
 import com.jakewharton.rxbinding2.widget.RxTextView
-import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_news_browser.*
 import news.treehou.se.news.R
 import news.treehou.se.news.gui.fragment.NewsBrowserFragment
@@ -11,7 +10,7 @@ import java.util.concurrent.TimeUnit
 /**
  * Activity used to search for news
  */
-class BrowseNewsActivity : BaseActivity(), HasSupportFragmentInjector {
+class BrowseNewsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

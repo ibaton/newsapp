@@ -12,7 +12,6 @@ import android.view.MenuItem
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.LibsBuilder
 import com.mikepenz.aboutlibraries.util.Colors
-import dagger.android.support.HasSupportFragmentInjector
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -24,7 +23,7 @@ import javax.inject.Inject
  * Main activity for application.
  * Provides news flow and options to navigate to other parts of application
  */
-class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, HasSupportFragmentInjector {
+class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     @Inject lateinit var newsApiSource: NewsApiSource
 
@@ -40,7 +39,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         navView.setNavigationItemSelectedListener(this)
 
         newsApiSource.getWatchedSources().first(emptyList())
-                .filter({it.isEmpty()})
+                .filter({ it.isEmpty() })
                 .compose(bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
